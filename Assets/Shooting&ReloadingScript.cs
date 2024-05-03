@@ -11,9 +11,12 @@ public class ShootScript : MonoBehaviour
     public GameObject magazine;
     public int ammo;
     bool reloading;
+    public Transform bulletSpawnPoint;
     [SerializeField] private AudioSource shootingSound;
     [SerializeField] private AudioSource reloadingSound;
     [SerializeField] private AudioSource emptyChamber;
+    [SerializeField]
+    GameObject bullet;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +37,10 @@ public class ShootScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && ammo > 0 && reloading == false)
         {
+            GameObject bulletGameObject = Instantiate(bullet, bulletSpawnPoint.position + transform.forward, Quaternion.identity);
+
+            bulletGameObject.transform.LookAt(bulletSpawnPoint.position + transform.forward * 2);
+
             shootingSound.Play();
 
             ammo -= 1;
